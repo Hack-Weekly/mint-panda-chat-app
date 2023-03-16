@@ -1,17 +1,18 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp, FirebaseOptions, FirebaseApp } from 'firebase/app';
+import { getFirestore, Firestore } from 'firebase/firestore';
 import {
-  getFirestore,
-  Firestore,
-  collection,
-  addDoc,
-} from 'firebase/firestore';
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  Auth,
+} from '@firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig: FirebaseOptions = {
-  apiKey: import.meta.env.FIREBASE_API_KEY,
+  apiKey: 'AIzaSyBcfOMHcZGyfz2sU3PJADcKljtMFTfsZis',
   authDomain: 'mint-panda-chat-app.firebaseapp.com',
   projectId: 'mint-panda-chat-app',
   storageBucket: 'mint-panda-chat-app.appspot.com',
@@ -22,3 +23,4 @@ const firebaseConfig: FirebaseOptions = {
 // Initialize Firebase
 const app: FirebaseApp = initializeApp(firebaseConfig);
 export const db: Firestore = getFirestore(app);
+export const auth: Auth = getAuth(app);
