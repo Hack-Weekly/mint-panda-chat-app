@@ -1,6 +1,3 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
-console.log(process.env);
 // Import the functions you need from the SDKs you need
 import { initializeApp, FirebaseOptions, FirebaseApp } from 'firebase/app';
 import {
@@ -14,7 +11,7 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig: FirebaseOptions = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: import.meta.env.FIREBASE_API_KEY,
   authDomain: 'mint-panda-chat-app.firebaseapp.com',
   projectId: 'mint-panda-chat-app',
   storageBucket: 'mint-panda-chat-app.appspot.com',
@@ -25,9 +22,3 @@ const firebaseConfig: FirebaseOptions = {
 // Initialize Firebase
 const app: FirebaseApp = initializeApp(firebaseConfig);
 export const db: Firestore = getFirestore(app);
-
-export const testCall = async () => {
-  await addDoc(collection(db, 'rooms'), {
-    hello: 'world',
-  });
-};
