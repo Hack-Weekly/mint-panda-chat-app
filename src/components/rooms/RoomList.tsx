@@ -1,4 +1,5 @@
-import { Room } from '../entities/room';
+import { Link } from 'react-router-dom';
+import { Room } from '../../entities/room';
 
 interface RoomListProps {
   rooms: Room[];
@@ -10,9 +11,9 @@ const RoomList: React.FC<RoomListProps> = ({ rooms }) => {
       {rooms.length > 0
         ? rooms.map((room) => {
             return (
-              <li key={room.id}>
+              <Link to={`/rooms/${room.id}`} key={room.id}>
                 <h2>{room.name}</h2>
-              </li>
+              </Link>
             );
           })
         : 'No rooms created yet!'}

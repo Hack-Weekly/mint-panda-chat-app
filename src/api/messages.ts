@@ -9,18 +9,15 @@ import {
 } from '@firebase/firestore';
 import { Message } from '../entities/message';
 
-export const sendMessage = async (roomId: string, message: Message) => {
+const sendMessage = async (roomId: string, message: Message) => {
   try {
-    await addDoc(collection(db, 'chat-rooms', roomId, 'messages'), message);
+    await addDoc(collection(db, 'rooms', roomId, 'messages'), message);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getMessages = (
-  roomId: string,
-  callback: (messages: any) => void
-) => {
+const getMessages = (roomId: string, callback: (messages: any) => void) => {
   try {
     return onSnapshot(
       query(
@@ -37,3 +34,5 @@ export const getMessages = (
     );
   } catch (error) {}
 };
+
+export { sendMessage, getMessages };

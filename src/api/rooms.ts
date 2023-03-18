@@ -1,11 +1,4 @@
-import {
-  collection,
-  addDoc,
-  onSnapshot,
-  query,
-  orderBy,
-  getDocs,
-} from '@firebase/firestore';
+import { collection, addDoc, getDocs, getDoc, doc } from '@firebase/firestore';
 import { db } from './firebase';
 import { Room } from '../entities/room';
 
@@ -41,4 +34,19 @@ const getAllRooms = async () => {
   }
 };
 
-export { addRoom, getAllRooms };
+const getRoomById = async (id: string) => {
+  try {
+    const docRef = doc(db, 'rooms', id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.log("That room doesn't exist!");
+    }
+  } catch (error) {
+    console.log(error);
+    alert(error);
+  }
+};
+
+export { addRoom, getAllRooms, getRoomById };
