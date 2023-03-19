@@ -9,7 +9,7 @@ import { Message } from '../../entities/message';
 
 const RoomPage = () => {
   const [room, setRoom] = useState<DocumentData | undefined>({});
-  const [messages, setMessages] = useState<[]>();
+  const [messages, setMessages] = useState<Message[]>();
   const { id } = useParams();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const RoomPage = () => {
   useEffect(() => {
     const getAllMessages = async () => {
       if (id) {
-        await getMessages(id, (messages: any) => {
+        await getMessages(id, (messages: Message[]) => {
           setMessages(messages);
         });
       }
@@ -38,7 +38,8 @@ const RoomPage = () => {
       <div>
         <h2>{room.name}</h2>
         <div>
-          {messages.map((message: any) => {
+          {messages.map((message: Message) => {
+            console.log(message.id);
             return <div key={message.id}>{message.text}</div>;
           })}
         </div>

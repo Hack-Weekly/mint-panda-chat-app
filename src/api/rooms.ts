@@ -1,10 +1,12 @@
 import { collection, addDoc, getDocs, getDoc, doc } from '@firebase/firestore';
-import { db } from './firebase';
+import { db, createCollection } from './firebase';
 import { Room } from '../entities/room';
+
+const roomCol = createCollection<Room>('rooms');
 
 const addRoom = async (roomName: string) => {
   try {
-    const roomRef = await addDoc(collection(db, 'rooms'), {
+    const roomRef = await addDoc(roomCol, {
       name: roomName,
       messages: [],
     });
@@ -17,16 +19,10 @@ const addRoom = async (roomName: string) => {
 
 const getAllRooms = async () => {
   try {
-    const querySnapshot = await getDocs(collection(db, 'rooms'));
+    const querySnapshot = await getDocs(roomCol);
     const rooms = querySnapshot.docs.map((doc) => {
-      return new Room(doc.id, doc.data().name, doc.data().messages);
-      // return {
-      //   id: doc.id,
-      //   name: doc.data().name,
-      //   messages: doc.data().messages,
-      // };
+      return new Room(doc.data().name, doc.data().messages, doc.id);
     });
-
     return rooms;
   } catch (error) {
     console.log(error);
@@ -36,7 +32,7 @@ const getAllRooms = async () => {
 
 const getRoomById = async (id: string) => {
   try {
-    const docRef = doc(db, 'rooms', id);
+    const docRef = doc(roomCol, id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       return docSnap.data();
