@@ -1,39 +1,34 @@
-import { db } from './firebase';
-import {
-  onSnapshot,
-  doc,
-  query,
-  addDoc,
-  collection,
-  orderBy,
-} from '@firebase/firestore';
+import { createCollection } from './firebase';
+import { onSnapshot, query, addDoc, orderBy } from '@firebase/firestore';
 import { Message } from '../entities/message';
 
-export const sendMessage = async (roomId: string, message: Message) => {
+const sendMessage = async (roomId: string, message: Message) => {
+  const messagesCol = createCollection<Message>('rooms', roomId, 'messages');
   try {
-    await addDoc(collection(db, 'chat-rooms', roomId, 'messages'), message);
+    const thing = await addDoc(messagesCol, message);
+    console.log(thing);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getMessages = (
+const getMessages = (
   roomId: string,
-  callback: (messages: any) => void
+  callback: (messages: Message[]) => void
 ) => {
+  const messagesCol = createCollection<Message>('rooms', roomId, 'messages');
   try {
     return onSnapshot(
-      query(
-        collection(db, 'rooms', roomId, 'messages'),
-        orderBy('created_at', 'asc')
-      ),
+      query(messagesCol, orderBy('created_at', 'asc')),
       (querySnapshot) => {
-        const messages = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
+        const messages = querySnapshot.docs.map((messageDoc) => ({
+          id: messageDoc.id,
+          ...messageDoc.data(),
         }));
         callback(messages);
       }
     );
   } catch (error) {}
 };
+
+export { sendMessage, getMessages };

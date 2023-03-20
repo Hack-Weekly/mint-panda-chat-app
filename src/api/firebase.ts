@@ -1,6 +1,12 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp, FirebaseOptions, FirebaseApp } from 'firebase/app';
-import {  getFirestore, Firestore,  } from 'firebase/firestore';
+import {
+  getFirestore,
+  Firestore,
+  DocumentData,
+  collection,
+  CollectionReference,
+} from 'firebase/firestore';
 import { getAuth, Auth } from '@firebase/auth';
 import { signInWithGoogle, logout } from './auth/login';
 
@@ -22,9 +28,22 @@ const app: FirebaseApp = initializeApp(firebaseConfig);
 const db: Firestore = getFirestore(app);
 const auth: Auth = getAuth(app);
 
-export {
-  auth,
-  db,
-  signInWithGoogle,
-  logout,
+const createCollection = <T = DocumentData>(
+  collectionName: string,
+  collectionRecordId?: string,
+  subCollection?: string
+) => {
+  if (
+    typeof collectionRecordId === 'undefined' &&
+    typeof subCollection === 'undefined'
+  ) {
+    return collection(db, collectionName) as CollectionReference<T>;
+  } else {
+    return collection(
+      db,
+      `${collectionName}/${collectionRecordId}/${subCollection}`
+    ) as CollectionReference<T>;
+  }
 };
+
+export { auth, db, signInWithGoogle, logout, createCollection };

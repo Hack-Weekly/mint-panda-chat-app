@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { addRoom } from '../api/rooms';
-import { Room } from '../entities/room';
+import { addRoom } from '../../api/rooms';
+import { Room } from '../../entities/room';
 
 interface AddRoomFormProps {
   onAddRoom: (room: Room) => void;

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth, db, logout } from '../api/firebase';
 import { query, collection, getDocs, where } from 'firebase/firestore';
-import RoomsPage from './RoomsPage';
 
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
@@ -35,11 +34,16 @@ function Dashboard() {
 
   return (
     <div>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/rooms">Rooms</Link>
+          </li>
+        </ul>
+      </nav>
       <p>Logged in as: {name}</p>
       <p>Email: {user?.email}</p>
       <button onClick={logout}>Logout</button>
-      {/* RoomsPage should be accessed via a route in some kind of nav bar */}
-      <RoomsPage />
     </div>
   );
 }
