@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, signInAnonymously, signOut } from 'firebase/auth';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
@@ -22,8 +22,25 @@ const signInWithGoogle = async () => {
   }
 };
 
+const signInByNickname = async (nickname: string) => {
+    try {
+        const res = await signInAnonymously(auth);
+        console.log(res);
+        // const q = query(collection(db, 'users'), where('name', '==', nickname));
+        // const docs = await getDocs(q);
+        // if (docs.docs.length === 0) {
+        //     await addDoc(collection(db, 'users'), {
+        //         uid: '',
+        //         name: nickname,
+        //     });
+        // }
+    } catch (err) {
+        // handle errors
+    }
+}
+
 const logout = () => {
   signOut(auth);
 };
 
-export { signInWithGoogle, logout };
+export { signInWithGoogle, signInByNickname, logout };
