@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import RoomsPage from "./components/rooms/RoomsPage";
 import RoomPage from "./components/rooms/RoomPage";
-import BottomNavBar from "./components/navbar";
+import BottomNavBar from "./components/BottomNavBar";
 
 const App: React.FC = () => {
   return (

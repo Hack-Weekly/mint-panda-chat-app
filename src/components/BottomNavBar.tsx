@@ -22,22 +22,28 @@ export default function BottomNavBar() {
 
   return (
     <BottomNavigation
-      sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+      sx={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        bgcolor: "#f0f0f0",
+      }}
       showLabels
     >
       <BottomNavigationAction
-        label="Message"
-        icon={<ChatBubbleIcon />}
+        label="Messages"
+        icon={<ChatBubbleIcon color="primary" />}
         onClick={() => handleMessage()}
       />
       <BottomNavigationAction
-        label="Room"
-        icon={<GroupsIcon />}
+        label="Rooms"
+        icon={<GroupsIcon color="primary" />}
         onClick={() => handleRoom()}
       />
       <BottomNavigationAction
         label="Profile"
-        icon={<PersonIcon />}
+        icon={<PersonIcon color="primary" />}
         onClick={() => handleProfile()}
       />
     </BottomNavigation>
