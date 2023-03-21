@@ -25,8 +25,7 @@ function Login() {
         }
 
         if (user) {
-            console.log(user)
-            // navigate("/dashboard");
+            navigate("/dashboard");
         }
     }, [user, loading]);
 

@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, signInWithPopup, signInAnonymously, signOut } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, signInAnonymously, signOut, updateProfile } from 'firebase/auth';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
@@ -10,12 +10,12 @@ const signInWithGoogle = async () => {
     const q = query(collection(db, 'users'), where('uid', '==', user.uid));
     const docs = await getDocs(q);
     if (docs.docs.length === 0) {
-      await addDoc(collection(db, 'users'), {
-        uid: user.uid,
-        name: user.displayName,
-        authProvider: 'google',
-        email: user.email,
-      });
+        await addDoc(collection(db, 'users'), {
+            uid: user.uid,
+            name: user.displayName,
+            authProvider: 'google',
+            email: user.email,
+        });
     }
   } catch (err) {
     // handle errors
@@ -25,15 +25,17 @@ const signInWithGoogle = async () => {
 const signInByNickname = async (nickname: string) => {
     try {
         const res = await signInAnonymously(auth);
-        console.log(res);
-        // const q = query(collection(db, 'users'), where('name', '==', nickname));
-        // const docs = await getDocs(q);
-        // if (docs.docs.length === 0) {
-        //     await addDoc(collection(db, 'users'), {
-        //         uid: '',
-        //         name: nickname,
-        //     });
-        // }
+        const q = query(collection(db, 'users'), where('uid', '==', res.user.uid));
+        const docs = await getDocs(q);
+        // updateProfile(res.user, { 
+        //     displayName: nickname
+        // });
+        if (docs.docs.length === 0) {
+            await addDoc(collection(db, 'users'), {
+                uid: res.user.uid,
+                name: nickname
+            });
+        }
     } catch (err) {
         // handle errors
     }
