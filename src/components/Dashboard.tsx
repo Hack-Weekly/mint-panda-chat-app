@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, db, logout } from "../api/firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
@@ -11,15 +12,27 @@ function Dashboard() {
 
   const fetchUserName = async () => {
     try {
-      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-      const doc = await getDocs(q);
-      const data = doc.docs[0].data();
+        if (user && user !== null) {
+            const q = query(collection(db, 'users'), where('uid', '==', user.uid));
+            const doc = await getDocs(q);
+            const docData = doc.docs[0];
+            const username = user.displayName ? user.displayName : '';
 
-      setName(data.name);
+            if (docData) {
+                setName(docData.data().name);
+            } else {
+                setName(username)
+            }
+        }
     } catch (err) {
       alert("An error occurred while fetching user data");
     }
   };
+
+  // onAuthStateChanged listens for both anonymous and Google sign in
+  onAuthStateChanged(auth, (user) => {
+    fetchUserName();
+  })
 
   useEffect(() => {
     if (loading) {
@@ -28,8 +41,6 @@ function Dashboard() {
     if (!user) {
       return navigate("/");
     }
-
-    fetchUserName();
   }, [user, loading]);
 
   return (

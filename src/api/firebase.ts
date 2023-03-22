@@ -8,7 +8,7 @@ import {
   CollectionReference,
 } from 'firebase/firestore';
 import { getAuth, Auth } from '@firebase/auth';
-import { signInWithGoogle, logout } from './auth/login';
+import { signInWithGoogle, signInByNickname, logout } from './auth/login';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -46,4 +46,4 @@ const createCollection = <T = DocumentData>(
   }
 };
 
-export { auth, db, signInWithGoogle, logout, createCollection };
+export { auth, db, signInWithGoogle, signInByNickname, logout, createCollection };
