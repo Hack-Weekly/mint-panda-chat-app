@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { Link, useNavigate } from 'react-router-dom';
-import { auth, db, logout } from '../api/firebase';
-import { query, collection, getDocs, where } from 'firebase/firestore';
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, db, logout } from "../api/firebase";
+import { query, collection, getDocs, where } from "firebase/firestore";
 
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const navigate = useNavigate();
 
   const fetchUserName = async () => {
     try {
-      const q = query(collection(db, 'users'), where('uid', '==', user?.uid));
+      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
       const doc = await getDocs(q);
       const data = doc.docs[0].data();
 
       setName(data.name);
     } catch (err) {
-      alert('An error occurred while fetching user data');
+      alert("An error occurred while fetching user data");
     }
   };
 
@@ -26,7 +26,7 @@ function Dashboard() {
       return;
     }
     if (!user) {
-      return navigate('/');
+      return navigate("/");
     }
 
     fetchUserName();
