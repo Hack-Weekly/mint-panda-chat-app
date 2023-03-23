@@ -1,8 +1,8 @@
-import { collection, addDoc, getDocs, getDoc, doc } from '@firebase/firestore';
-import { db, createCollection } from './firebase';
-import { Room } from '../entities/room';
+import { collection, addDoc, getDocs, getDoc, doc } from "@firebase/firestore";
+import { db, createCollection } from "./firebase";
+import { Room } from "../entities/room";
 
-const roomCol = createCollection<Room>('rooms');
+const roomCol = createCollection<Room>("rooms");
 
 const addRoom = async (roomName: string) => {
   try {
@@ -13,7 +13,7 @@ const addRoom = async (roomName: string) => {
     return roomRef;
   } catch (error) {
     console.log(error);
-    alert('There was an issue adding the room.');
+    alert("There was an issue adding the room.");
   }
 };
 
@@ -26,7 +26,7 @@ const getAllRooms = async () => {
     return rooms;
   } catch (error) {
     console.log(error);
-    alert('There was an error getting all the rooms');
+    alert("There was an error getting all the rooms");
   }
 };
 

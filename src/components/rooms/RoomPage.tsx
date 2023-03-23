@@ -1,11 +1,13 @@
-import { DocumentData } from '@firebase/firestore';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { DocumentData } from "@firebase/firestore";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
-import { getRoomById } from '../../api/rooms';
-import { getMessages } from '../../api/messages';
-import MessageInput from '../messages/MessageInput';
-import { Message } from '../../entities/message';
+import { getRoomById } from "../../api/rooms";
+import { getMessages } from "../../api/messages";
+import MessageInput from "../messages/MessageInput";
+import { Message } from "../../entities/message";
+
+import RoomChatBubble from "./RoomChatBubble";
 
 const RoomPage = () => {
   const [room, setRoom] = useState<DocumentData | undefined>({});
@@ -39,8 +41,15 @@ const RoomPage = () => {
         <h2>{room.name}</h2>
         <div>
           {messages.map((message: Message) => {
-            console.log(message.id);
-            return <div key={message.id}>{message.text}</div>;
+            return (
+              <div key={message.id}>
+                <RoomChatBubble
+                  text={message.text}
+                  user_id={message.user_id}
+                  created_at={message.created_at}
+                />
+              </div>
+            );
           })}
         </div>
         <MessageInput roomId={id} />
