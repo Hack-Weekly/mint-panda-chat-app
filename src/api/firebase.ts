@@ -15,12 +15,12 @@ import { signInWithGoogle, signInByNickname, logout } from './auth/login';
 
 // Your web app's Firebase configuration
 const firebaseConfig: FirebaseOptions = {
-  apiKey: 'AIzaSyBcfOMHcZGyfz2sU3PJADcKljtMFTfsZis',
-  authDomain: 'mint-panda-chat-app.firebaseapp.com',
-  projectId: 'mint-panda-chat-app',
-  storageBucket: 'mint-panda-chat-app.appspot.com',
-  messagingSenderId: '849720086673',
-  appId: '1:849720086673:web:74ace30fa1c8a21a2e2f30',
+  apiKey: 'AIzaSyAICXgGJKAn1VLxbhZVkziACUGUIa7AWgU',
+  authDomain: 'mint-panda-chat-app-489ee.firebaseapp.com',
+  projectId: 'mint-panda-chat-app-489ee',
+  storageBucket: 'mint-panda-chat-app-489ee.appspot.com',
+  messagingSenderId: '665729033482',
+  appId: '1:665729033482:web:cf37354a0df7e895cb06f3',
 };
 
 // Initialize Firebase
@@ -46,4 +46,11 @@ const createCollection = <T = DocumentData>(
   }
 };
 
-export { auth, db, signInWithGoogle, signInByNickname, logout, createCollection };
+export {
+  auth,
+  db,
+  signInWithGoogle,
+  signInByNickname,
+  logout,
+  createCollection,
+};
