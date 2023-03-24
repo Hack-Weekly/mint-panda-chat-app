@@ -1,5 +1,7 @@
 import { createCollection } from "./firebase";
-import { onSnapshot, query, addDoc, orderBy } from "@firebase/firestore";
+import { collection, where } from "firebase/firestore";
+import { db } from "./firebase";
+import { onSnapshot, query, addDoc, orderBy, getDocs } from "@firebase/firestore";
 import { Message } from "../entities/message";
 
 const sendMessage = async (roomId: string, message: Message) => {
@@ -10,6 +12,13 @@ const sendMessage = async (roomId: string, message: Message) => {
     console.log(error);
   }
 };
+
+const getIndividualMessages = async (userId: string) => {
+    const q = query(collection(db, "messages"));
+    const docs = await getDocs(q);
+    console.log(docs.docs)
+    return docs.docs;
+}
 
 const getMessages = (
   roomId: string,
@@ -30,4 +39,4 @@ const getMessages = (
   } catch (error) {}
 };
 
-export { sendMessage, getMessages };
+export { sendMessage, getIndividualMessages, getMessages };

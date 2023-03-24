@@ -1,5 +1,13 @@
+import { useEffect } from 'react';
+import { getIndividualMessages } from '../../api/messages';
 import './MessagesPage.css'
+
 export default function Messages() {
+
+    useEffect(() => {
+        getIndividualMessages('lHDNi1jYsbeVukCX5mraPAA4cbl2');
+    }, []);
+
     return (
         <div id="messages-page">
             <div id='messages-page-header'>
