@@ -17,16 +17,7 @@ const App: React.FC = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/rooms" element={<RoomsPage />} />
         <Route path="rooms/:id" element={<RoomPage />} />
-        <Route
-          path="/profile"
-          element={
-            <Profile
-              name="Matt"
-              user={{ email: "hi@hi.com" }}
-              logout={logout}
-            />
-          }
-        />
+        <Route path="/profile" element={<Profile logout={logout} />} />
       </Routes>
       <div>
         <BottomNavBar />
