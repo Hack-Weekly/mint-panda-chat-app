@@ -1,0 +1,47 @@
+#messages-page {
+    position: relative;
+    margin: 0 5%;
+}
+
+#messages-page h1 {
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+#messages-page-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.messages-icon {
+    width: 2rem;
+    height: 2rem;
+}
+
+#new-message-icon {
+    position: absolute;
+    right: 0;
+}
+
+#messages-search {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    background-color: rgba(217, 217, 217, 0.32);
+    border-radius: 8px;
+    padding: 0 10px;
+}
+
+#search-input {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    font-size: 1.3rem;
+    font-family: 'Jost';
+}
+
+#search-input:focus {
+    outline: none;
+}
