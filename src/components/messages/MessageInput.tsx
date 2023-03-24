@@ -1,29 +1,29 @@
-import { useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../api/firebase';
-import { Message } from '../../entities/message';
-import { sendMessage } from '../../api/messages';
+import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../api/firebase";
+import { Message } from "../../entities/message";
+import { sendMessage } from "../../api/messages";
 
 interface MessageInputProps {
   roomId: string;
 }
 
 const MessageInput: React.FC<MessageInputProps> = ({ roomId }) => {
-  const [messageText, setMessageText] = useState('');
+  const [messageText, setMessageText] = useState("");
 
   const [user] = useAuthState(auth);
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const messageToSend: Message = {
-      created_at: new Date().toISOString(),
+      created_at: new Date(),
       text: messageText,
       user_id: user?.uid!,
       room_id: roomId,
     };
 
     await sendMessage(roomId, messageToSend);
-    setMessageText('');
+    setMessageText("");
   };
 
   return (
