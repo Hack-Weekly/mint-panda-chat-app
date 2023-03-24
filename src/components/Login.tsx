@@ -11,9 +11,7 @@ function Login() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    let nameInput = document.getElementById(
-      "nickname-input"
-    ) as HTMLInputElement;
+    let nameInput = document.getElementById("nickname-input") as HTMLInputElement;
     let name = nameInput.value;
     signInByNickname(name);
   };
@@ -25,7 +23,7 @@ function Login() {
     }
 
     if (user) {
-      navigate("/dashboard");
+      navigate("/messages");
     }
   }, [user, loading]);
 

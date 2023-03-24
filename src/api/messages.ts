@@ -16,7 +16,6 @@ const sendMessage = async (roomId: string, message: Message) => {
 const getIndividualMessages = async (userId: string) => {
     const q = query(collection(db, "messages"));
     const docs = await getDocs(q);
-    console.log(docs.docs)
     return docs.docs;
 }
 
