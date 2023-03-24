@@ -27,7 +27,7 @@ const RoomPage = () => {
   useEffect(() => {
     const getAllMessages = async () => {
       if (id) {
-        await getMessages(id, (messages: Message[]) => {
+        getMessages(id, (messages: Message[]) => {
           setMessages(messages);
         });
       }

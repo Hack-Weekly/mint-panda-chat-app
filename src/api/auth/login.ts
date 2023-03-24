@@ -27,9 +27,6 @@ const signInByNickname = async (nickname: string) => {
         const res = await signInAnonymously(auth);
         const q = query(collection(db, 'users'), where('uid', '==', res.user.uid));
         const docs = await getDocs(q);
-        // updateProfile(res.user, { 
-        //     displayName: nickname
-        // });
         if (docs.docs.length === 0) {
             await addDoc(collection(db, 'users'), {
                 uid: res.user.uid,

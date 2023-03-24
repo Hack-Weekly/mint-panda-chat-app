@@ -1,0 +1,13 @@
+.navAction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Jost';
+    font-size: 1rem;
+}
+
+.navAction .navIcon {
+    width: 1.8rem;
+    height: 1.8rem;
+    padding: 0 10vw;
+}
