@@ -5,6 +5,9 @@ import Dashboard from "./components/Dashboard";
 import RoomsPage from "./components/rooms/RoomsPage";
 import RoomPage from "./components/rooms/RoomPage";
 import BottomNavBar from "./components/BottomNavBar";
+import Profile from "./components/Profile";
+
+import { logout } from "./api/firebase";
 
 const App: React.FC = () => {
   return (
@@ -14,6 +17,7 @@ const App: React.FC = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/rooms" element={<RoomsPage />} />
         <Route path="rooms/:id" element={<RoomPage />} />
+        <Route path="/profile" element={<Profile logout={logout} />} />
       </Routes>
       <div>
         <BottomNavBar />

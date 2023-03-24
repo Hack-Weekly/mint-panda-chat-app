@@ -12,18 +12,18 @@ function Dashboard() {
 
   const fetchUserName = async () => {
     try {
-        if (user && user !== null) {
-            const q = query(collection(db, 'users'), where('uid', '==', user.uid));
-            const doc = await getDocs(q);
-            const docData = doc.docs[0];
-            const username = user.displayName ? user.displayName : '';
+      if (user && user !== null) {
+        const q = query(collection(db, "users"), where("uid", "==", user.uid));
+        const doc = await getDocs(q);
+        const docData = doc.docs[0];
+        const username = user.displayName ? user.displayName : "";
 
-            if (docData) {
-                setName(docData.data().name);
-            } else {
-                setName(username)
-            }
+        if (docData) {
+          setName(docData.data().name);
+        } else {
+          setName(username);
         }
+      }
     } catch (err) {
       alert("An error occurred while fetching user data");
     }
@@ -32,7 +32,7 @@ function Dashboard() {
   // onAuthStateChanged listens for both anonymous and Google sign in
   onAuthStateChanged(auth, (user) => {
     fetchUserName();
-  })
+  });
 
   useEffect(() => {
     if (loading) {
@@ -52,9 +52,6 @@ function Dashboard() {
           </li>
         </ul>
       </nav>
-      <p>Logged in as: {name}</p>
-      <p>Email: {user?.email}</p>
-      <button onClick={logout}>Logout</button>
     </div>
   );
 }

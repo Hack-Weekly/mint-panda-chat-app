@@ -1,61 +1,59 @@
 #login-page {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    font-family: 'Jost';
-    color: #3b3b3b;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  color: #3b3b3b;
 }
 
 #login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 #login-form input {
-    font-size: 1rem;
-    font-family: 'Jost';
-    margin-bottom: 30px;
+  font-size: 1rem;
+  font-family: "Jost";
+  margin-bottom: 30px;
 }
 
 #nickname-input {
-    border: 1px solid grey;
-    border-radius: 10px;
-    height: 50px;
-    text-indent: 8px;
-    width: 250px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  height: 50px;
+  text-indent: 8px;
+  width: 250px;
 }
-
 
 #sign-in-button {
-    all: unset;
-    text-align: center;
-    background-color: rgba(217, 217, 217, 0.35);
-    border-radius: 10px;
-    height: 50px;
-    width: 100px;
+  all: unset;
+  text-align: center;
+  background-color: rgba(217, 217, 217, 0.35);
+  border-radius: 10px;
+  height: 50px;
+  width: 100px;
 }
 
-#nickname-input:focus{
-    outline: none;
-    border-color: rgba(144, 198, 249, 0.6);
+#nickname-input:focus {
+  outline: none;
+  border-color: rgba(144, 198, 249, 0.6);
 }
 
 #google-login-button {
-    all: unset;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: rgba(217, 217, 217, 0.35);
-    border-radius: 10px;
-    height: 75px;
-    width: 250px;
-    padding: 0 1rem;
-    font-family: 'Jost';
-    font-size: 1.2rem;
-    margin: 0 auto;
+  all: unset;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(217, 217, 217, 0.35);
+  border-radius: 10px;
+  height: 75px;
+  width: 250px;
+  padding: 0 1rem;
+  font-family: "Jost";
+  font-size: 1.2rem;
+  margin: 0 auto;
 }
