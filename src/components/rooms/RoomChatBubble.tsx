@@ -1,14 +1,16 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import "./RoomChatBubble.css";
-
+import { collection, query, where, getDocs } from "@firebase/firestore";
 import { Message } from "../../entities/message";
-import { getUserById } from "../../api/users";
+import { db } from "../../api/firebase";
 
 const RoomChatBubble = ({ text, user_id, created_at }: Message) => {
+  const [user, setUser] = useState<any>("");
+
   // convert created_at to new Date for converting to a time as a string
   const convertMessageDate = new Date(
     created_at.seconds * 1000 + created_at.nanoseconds / 1000000
@@ -25,23 +27,34 @@ const RoomChatBubble = ({ text, user_id, created_at }: Message) => {
     return `${day}/${month}/${year}`;
   };
 
-  // to grab only first name of the user when needed
-  const getFirstName = (user: any) => {
-    const firstName = user.displayName.split(" ")[0];
-    return firstName;
+  // Grab only first letter of the first name of the user for chat avatar bubble
+  const getFirstNameLetter = (user: any) => {
+    if (user) {
+      const firstLetter = user.split(" ")[0][0];
+      return firstLetter;
+    }
   };
 
-  // console.log(user.uid);
+  // get the user data from db using the user id
   useEffect(() => {
-    const getUsers = async () => {
-      if (user_id) {
-        await getUserById(user_id).then((userData) => {
-          console.log(userData);
+    const getUsers = async (id: string) => {
+      const usersRef = collection(db, "users");
+      try {
+        const q = query(usersRef, where("uid", "==", id));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (doc) => {
+          if (doc.exists()) {
+            setUser(doc.data());
+          } else {
+            console.log("User not in chat room");
+          }
         });
+      } catch (error) {
+        alert(error);
       }
     };
-    getUsers();
-  }, []);
+    getUsers(user_id);
+  }, [text]);
 
   return (
     <List
@@ -50,6 +63,9 @@ const RoomChatBubble = ({ text, user_id, created_at }: Message) => {
     >
       <ListItemAvatar>
         <ListItem disablePadding>
+          <div>
+            <Avatar>{getFirstNameLetter(user.name)}</Avatar>
+          </div>
           <div id="text">{text}</div>
           <div id="date">
             {createFullDate(todaysDate) === createFullDate(convertMessageDate)
