@@ -4,44 +4,44 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import "./RoomChatBubble.css";
-import { collection, query, where, getDocs } from "@firebase/firestore";
+import {
+  collection,
+  query,
+  getCountFromServer,
+  getDocs,
+} from "@firebase/firestore";
 import { db } from "../../api/firebase";
 import { Room } from "../../entities/room";
-import { getRoomById } from "../../api/rooms";
 
-const RoomInstance = ({ id, name, messages }: Room) => {
-  const [user, setUser] = useState<any>("");
+const RoomInstance = ({ id, name }: Room) => {
+  const [roomMessagesCount, setRoomMessagesCount] = useState(0);
+  const [memberCount, setMemberCount] = useState(0);
 
-  const q = query(collection(db, "rooms"), where("id", "==", id));
+  // counts the number of messages in a room
+  useEffect(() => {
+    const roomMessages = async (id: any) => {
+      const roomMessages = query(collection(db, "rooms", id, "messages"));
+      const snapShot = await getCountFromServer(roomMessages);
+      setRoomMessagesCount(snapShot.data().count);
+    };
+    roomMessages(id);
+  }, []);
 
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
-  });
-
-  console.log(room);
-  //   console.log(id);
-  // get the user data from db using the user id
-  //   useEffect(() => {
-  //     const getUsers = async (id: string) => {
-  //       const usersRef = collection(db, "users");
-  //       try {
-  //         const q = query(usersRef, where("uid", "==", id));
-  //         const querySnapshot = await getDocs(q);
-  //         querySnapshot.forEach(async (doc) => {
-  //           if (doc.exists()) {
-  //             setUser(doc.data());
-  //           } else {
-  //             console.log("User not in chat room");
-  //           }
-  //         });
-  //       } catch (error) {
-  //         alert(error);
-  //       }
-  //     };
-  //     // getUsers(user_id);
-  //   }, [text]);
+  // counts the number of distinct members in a room
+  useEffect(() => {
+    const messageMembers = async (id: any) => {
+      const q = query(collection(db, "rooms", id, "messages"));
+      const querySnapshot = await getDocs(q);
+      const members: Array<string> = [];
+      querySnapshot.forEach((doc) => {
+        if (!members.includes(doc.get("user_id"))) {
+          members.push(doc.get("user_id"));
+        }
+      });
+      setMemberCount(members.length);
+    };
+    messageMembers(id);
+  }, []);
 
   return (
     <List
@@ -54,8 +54,8 @@ const RoomInstance = ({ id, name, messages }: Room) => {
             <Avatar></Avatar>
           </div>
           <div id="room-name">{name}</div>
-          <div id="member-count"></div>
-          <div id="message-count"></div>
+          <div id="member-count">{memberCount} online members</div>
+          <div id="message-count">{roomMessagesCount}</div>
         </ListItem>
       </ListItemAvatar>
     </List>

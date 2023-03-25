@@ -11,7 +11,6 @@ const RoomList: React.FC<RoomListProps> = ({ rooms }) => {
     <ul>
       {rooms.length > 0
         ? rooms.map((room) => {
-            console.log(room);
             return (
               <Link to={`/rooms/${room.id}`} key={room.id}>
                 <RoomInstance

@@ -35,7 +35,6 @@ const getRoomById = async (id: string) => {
     const docRef = doc(roomCol, id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log(docSnap.data());
       return docSnap.data();
     } else {
       console.log("That room doesn't exist!");
