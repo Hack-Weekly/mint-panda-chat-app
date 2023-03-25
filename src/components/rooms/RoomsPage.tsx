@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router';
+import { useState, useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router";
 
-import { auth } from '../../api/firebase';
-import { Room } from '../../entities/room';
-import AddRoomForm from './AddRoomForm';
-import RoomList from './RoomList';
-import { getAllRooms } from '../../api/rooms';
+import { auth } from "../../api/firebase";
+import { Room } from "../../entities/room";
+import AddRoomForm from "./AddRoomForm";
+import RoomList from "./RoomList";
+import { getAllRooms } from "../../api/rooms";
 
 const RoomsPage = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -16,7 +16,7 @@ const RoomsPage = () => {
 
   useEffect(() => {
     if (!user) {
-      navigate('/');
+      navigate("/");
     }
   }, [user]);
 
@@ -27,7 +27,6 @@ const RoomsPage = () => {
       setIsLoading(false);
       if (response) {
         setRooms(response);
-        console.log(response);
       }
     };
     getRooms();

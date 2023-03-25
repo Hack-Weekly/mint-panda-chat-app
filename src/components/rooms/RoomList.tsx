@@ -10,7 +10,7 @@ import {
   ListItemAvatar,
   Typography,
   styled,
-  Chip
+  Chip,
 } from "@mui/material";
 
 interface RoomListProps {
@@ -31,13 +31,13 @@ const colors = [
   "darkslateblue",
   "darkgreen",
   "paleturquoise",
-  "salmon"
+  "salmon",
 ];
 
 const StyledList = styled(List)`
-background: linear-gradient(#f7f7f7, lightgray);
-margin: 16px;
-max-width: 100%;
+  background: linear-gradient(#f7f7f7, lightgray);
+  margin: 16px;
+  max-width: 100%;
   a {
     color: black;
     text-decoration: none;
@@ -46,15 +46,14 @@ max-width: 100%;
 const StyledRoomAvatar = styled(Avatar)`
   background-color: none;
   color: transparent;
-
 `;
 const StyledChip = styled(Chip)`
-  background-color: #C70039;
+  background-color: #c70039;
   border-radius: 50%;
   color: white;
   font-size: 0.75rem;
   height: 28px;
-  width: 28px ;
+  width: 28px;
 
   span {
     padding: 4px;
@@ -81,11 +80,11 @@ export default function RoomsList({ isLoading, rooms }: RoomListProps) {
                   alt={`icon for ${room.name}`}
                   src=""
                   sx={{
-                    backgroundImage: `linear-gradient(${colors[
-                      Math.floor(Math.random() * colors.length)
-                    ]}, ${colors[
-                      Math.floor(Math.random() * colors.length)
-                    ]},  lightgray)`
+                    backgroundImage: `linear-gradient(${
+                      colors[Math.floor(Math.random() * colors.length)]
+                    }, ${
+                      colors[Math.floor(Math.random() * colors.length)]
+                    },  lightgray)`,
                   }}
                 />
               </ListItemAvatar>
@@ -95,7 +94,7 @@ export default function RoomsList({ isLoading, rooms }: RoomListProps) {
                 secondary={
                   <React.Fragment>
                     <Typography
-                      sx={{ display: "inline", fontWeight: '200' }}
+                      sx={{ display: "inline", fontWeight: "200" }}
                       component="span"
                       variant="body2"
                       color="text.primary"

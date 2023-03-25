@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 
 import { getRoomById } from "../../api/rooms";
 import { getMessages } from "../../api/messages";
-import MessageInput from "../messages/MessageInput";
+import MessageInput from "../conversations/MessageInput";
 import { Message } from "../../entities/message";
 
 import RoomChatBubble from "./RoomChatBubble";
