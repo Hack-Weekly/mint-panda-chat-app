@@ -8,6 +8,18 @@ interface MessageInputProps {
   roomId: string;
 }
 
+const inputStyle = {
+  padding: '.5rem',
+  width: '80%',
+  borderRadius: '.5rem',
+  border: '1px solid #CCC',
+  color: '#555'
+}
+
+const buttonStyle = {
+
+}
+
 const MessageInput: React.FC<MessageInputProps> = ({ roomId }) => {
   const [messageText, setMessageText] = useState("");
 
@@ -27,14 +39,15 @@ const MessageInput: React.FC<MessageInputProps> = ({ roomId }) => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
+    <form style={{ display: 'flex', gap: '.5rem' }} onSubmit={submitHandler}>
       <input
+        style={inputStyle}
         type="text"
         placeholder="Enter message"
         onChange={(e) => setMessageText(e.target.value)}
         value={messageText}
       />
-      <button>Send Message</button>
+      <button style={buttonStyle}>Send Message</button>
     </form>
   );
 };
