@@ -35,6 +35,9 @@ const RoomPage = () => {
     getAllMessages();
   }, []);
 
+  console.log("room: " + room);
+  console.log("messages: " + messages);
+
   if (room && room.name && messages && id) {
     return (
       <div>
