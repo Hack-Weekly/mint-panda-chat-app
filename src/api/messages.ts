@@ -13,6 +13,7 @@ const sendMessage = async (roomId: string, message: Message) => {
   }
 };
 
+// Firebase doesn't seem to support OR queries so two query results are concatenated
 const getIndividualMessages = async (userId: string) => {
     const fromQueries = query(
         collection(db, "conversations"), 
