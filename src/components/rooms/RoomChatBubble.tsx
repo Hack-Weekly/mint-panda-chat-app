@@ -59,33 +59,45 @@ const RoomChatBubble = ({ text, user_id, created_at }: Message) => {
   return (
     <List
       dense
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+      sx={{ 
+        width: "100%", 
+        maxWidth: 360, 
+      }}
     >
       <ListItemAvatar>
         <ListItem disablePadding>
           <div>
             <Avatar>{getFirstNameLetter(user.name)}</Avatar>
           </div>
-          <div id="text">{text}</div>
-          <div id="date">
-            {createFullDate(todaysDate) === createFullDate(convertMessageDate)
-              ? convertMessageDate.toLocaleTimeString([], {
-                  hour: "numeric",
-                  minute: "2-digit",
-                  hour12: true,
-                })
-              : convertMessageDate.toLocaleDateString([], {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                }) +
-                " at " +
-                convertMessageDate.toLocaleTimeString([], {
-                  hour: "numeric",
-                  minute: "2-digit",
-                  hour12: true,
-                })}
+          <div style={{        
+            background: '#DDD', 
+            margin: '.1rem .4rem', 
+            padding: '1rem',
+            width: '100%',
+            borderRadius: '.75rem'
+          }}
+          >
+            <div id="text">{text}</div>
+            <div id="date" style={{fontSize: '.6rem', position: 'absolute', bottom: '.25rem', right: '1rem'}}>
+              {createFullDate(todaysDate) === createFullDate(convertMessageDate)
+                ? convertMessageDate.toLocaleTimeString([], {
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true,
+                  })
+                : convertMessageDate.toLocaleDateString([], {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }) +
+                  " at " +
+                  convertMessageDate.toLocaleTimeString([], {
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true,
+                  })}
+            </div>
           </div>
         </ListItem>
       </ListItemAvatar>
