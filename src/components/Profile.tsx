@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
 import { auth } from "../api/firebase";
 import classes from "./Profile.module.css";
 
@@ -10,16 +9,15 @@ interface ProfileProps {
 
 const Profile: React.FC<ProfileProps> = ({ logout }) => {
   const [user] = useAuthState(auth);
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate("/");
+    window.location.href = '/';
   };
 
   useEffect(() => {
     if (!user) {
-      navigate("/");
+        window.location.href = '/';
     }
   }, []);
 
