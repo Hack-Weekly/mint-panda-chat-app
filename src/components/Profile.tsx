@@ -14,12 +14,12 @@ const Profile: React.FC<ProfileProps> = ({ logout }) => {
 
   const handleLogout = () => {
     logout();
-    navigate("/");
+    window.location.href = '/';
   };
 
   useEffect(() => {
     if (!user) {
-      navigate("/");
+        window.location.href = '/';
     }
   }, []);
 

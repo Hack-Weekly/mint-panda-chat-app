@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
-import Messages from "./components/messages/MessagesPage";
+import Messages from "./components/conversations/ConversationsPage";
 import RoomsPage from "./components/rooms/RoomsPage";
 import RoomPage from "./components/rooms/RoomPage";
 import BottomNavBar from "./components/BottomNavBar";

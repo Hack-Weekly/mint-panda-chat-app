@@ -10,7 +10,7 @@ export default function BottomNavBar() {
   const navigate = useNavigate();
 
   const handleMessage = () => {
-    navigate("/dashboard");
+    navigate("/messages");
   };
 
   const handleRoom = () => {

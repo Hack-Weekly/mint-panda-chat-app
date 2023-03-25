@@ -1,7 +1,8 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, signInByNickname, signInWithGoogle } from "../api/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState, } from "react-firebase-hooks/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
 import "./Login.css";
 
@@ -23,7 +24,7 @@ function Login() {
     }
 
     if (user) {
-      navigate("/messages");
+        navigate("/messages");
     }
   }, [user, loading]);
 

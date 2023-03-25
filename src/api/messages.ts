@@ -14,9 +14,20 @@ const sendMessage = async (roomId: string, message: Message) => {
 };
 
 const getIndividualMessages = async (userId: string) => {
-    const q = query(collection(db, "messages"));
-    const docs = await getDocs(q);
-    return docs.docs;
+    const fromQueries = query(
+        collection(db, "conversations"), 
+            where('user_to_id', '==', userId),
+            orderBy('created_at', 'desc')
+    );
+    const toQueries = query(
+        collection(db, "conversations"), 
+            where('user_from_id', '==', userId),
+            orderBy('created_at', 'desc')
+    );
+
+    const fromDocs = await getDocs(fromQueries);
+    const toDocs = await getDocs(toQueries);
+    return fromDocs.docs.concat(toDocs.docs);
 }
 
 const getMessages = (

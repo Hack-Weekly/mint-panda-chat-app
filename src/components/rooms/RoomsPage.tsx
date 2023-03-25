@@ -25,7 +25,6 @@ const RoomsPage = () => {
       const response = await getAllRooms();
       if (response) {
         setRooms(response);
-        console.log(response);
       }
     };
     getRooms();
