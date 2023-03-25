@@ -30,7 +30,7 @@ const RoomChatBubble = ({ text, user_id, created_at }: Message) => {
   // Grab only first letter of the first name of the user for chat avatar bubble
   const getFirstNameLetter = (user: any) => {
     if (user) {
-      const firstLetter = user.split(" ")[0][0];
+      const firstLetter = user.split(" ")[0][0].toUpperCase();
       return firstLetter;
     }
   };
@@ -59,9 +59,9 @@ const RoomChatBubble = ({ text, user_id, created_at }: Message) => {
   return (
     <List
       dense
-      sx={{ 
-        width: "100%", 
-        maxWidth: 360, 
+      sx={{
+        width: "100%",
+        maxWidth: 360,
       }}
     >
       <ListItemAvatar>
@@ -69,16 +69,25 @@ const RoomChatBubble = ({ text, user_id, created_at }: Message) => {
           <div>
             <Avatar>{getFirstNameLetter(user.name)}</Avatar>
           </div>
-          <div style={{        
-            background: '#DDD', 
-            margin: '.1rem .4rem', 
-            padding: '1rem',
-            width: '100%',
-            borderRadius: '.75rem'
-          }}
+          <div
+            style={{
+              background: "#DDD",
+              margin: ".1rem .4rem",
+              padding: "1rem",
+              width: "100%",
+              borderRadius: ".75rem",
+            }}
           >
             <div id="text">{text}</div>
-            <div id="date" style={{fontSize: '.6rem', position: 'absolute', bottom: '.25rem', right: '1rem'}}>
+            <div
+              id="date"
+              style={{
+                fontSize: ".6rem",
+                position: "absolute",
+                bottom: ".25rem",
+                right: "1rem",
+              }}
+            >
               {createFullDate(todaysDate) === createFullDate(convertMessageDate)
                 ? convertMessageDate.toLocaleTimeString([], {
                     hour: "numeric",
