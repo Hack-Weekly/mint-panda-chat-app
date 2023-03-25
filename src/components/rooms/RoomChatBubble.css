@@ -9,3 +9,8 @@
 #date {
   font-size: small;
 }
+
+.bubble-image {
+  max-height: 200px;
+  width: auto;
+}
