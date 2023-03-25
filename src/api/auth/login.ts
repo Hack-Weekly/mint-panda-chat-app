@@ -4,7 +4,6 @@ import {
   signInWithPopup,
   signInAnonymously,
   signOut,
-  updateProfile,
 } from "firebase/auth";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "../firebase";

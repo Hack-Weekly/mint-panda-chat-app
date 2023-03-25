@@ -1,7 +1,8 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, signInByNickname, signInWithGoogle } from "../api/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState, } from "react-firebase-hooks/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
 import "./Login.css";
 
@@ -11,9 +12,7 @@ function Login() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    let nameInput = document.getElementById(
-      "nickname-input"
-    ) as HTMLInputElement;
+    let nameInput = document.getElementById("nickname-input") as HTMLInputElement;
     let name = nameInput.value;
     signInByNickname(name);
   };
@@ -25,7 +24,7 @@ function Login() {
     }
 
     if (user) {
-      navigate("/dashboard");
+        navigate("/messages");
     }
   }, [user, loading]);
 

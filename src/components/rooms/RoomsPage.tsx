@@ -10,7 +10,7 @@ import { getAllRooms } from "../../api/rooms";
 
 const RoomsPage = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
 
@@ -22,7 +22,9 @@ const RoomsPage = () => {
 
   useEffect(() => {
     const getRooms = async () => {
+      setIsLoading(true);
       const response = await getAllRooms();
+      setIsLoading(false);
       if (response) {
         setRooms(response);
       }
@@ -39,7 +41,7 @@ const RoomsPage = () => {
   return (
     <div>
       <h2>Previously Created Rooms</h2>
-      <RoomList rooms={rooms} />
+      <RoomList rooms={rooms} isLoading={isLoading}/>
       <h3>Want to add a room?</h3>
       <AddRoomForm onAddRoom={addRoomHandler} />
     </div>

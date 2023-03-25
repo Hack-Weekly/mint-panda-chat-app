@@ -1,5 +1,7 @@
 import { createCollection } from "./firebase";
-import { onSnapshot, query, addDoc, orderBy } from "@firebase/firestore";
+import { collection, where } from "firebase/firestore";
+import { db } from "./firebase";
+import { onSnapshot, query, addDoc, orderBy, getDocs } from "@firebase/firestore";
 import { Message } from "../entities/message";
 
 const sendMessage = async (roomId: string, message: Message) => {
@@ -10,6 +12,24 @@ const sendMessage = async (roomId: string, message: Message) => {
     console.log(error);
   }
 };
+
+// Firebase doesn't seem to support OR queries so two query results are concatenated
+const getIndividualMessages = async (userId: string) => {
+    const fromQueries = query(
+        collection(db, "conversations"), 
+            where('user_to_id', '==', userId),
+            orderBy('created_at', 'desc')
+    );
+    const toQueries = query(
+        collection(db, "conversations"), 
+            where('user_from_id', '==', userId),
+            orderBy('created_at', 'desc')
+    );
+
+    const fromDocs = await getDocs(fromQueries);
+    const toDocs = await getDocs(toQueries);
+    return fromDocs.docs.concat(toDocs.docs);
+}
 
 const getMessages = (
   roomId: string,
@@ -30,4 +50,4 @@ const getMessages = (
   } catch (error) {}
 };
 
-export { sendMessage, getMessages };
+export { sendMessage, getIndividualMessages, getMessages };
