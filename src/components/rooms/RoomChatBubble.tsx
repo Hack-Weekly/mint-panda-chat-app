@@ -8,7 +8,12 @@ import { collection, query, where, getDocs } from "@firebase/firestore";
 import { Message } from "../../entities/message";
 import { db } from "../../api/firebase";
 
-const RoomChatBubble = ({ text, user_id, created_at }: Message) => {
+const RoomChatBubble = ({
+  text,
+  user_id,
+  created_at,
+  file_content,
+}: Message) => {
   const [user, setUser] = useState<any>("");
 
   // convert created_at to new Date for converting to a time as a string
@@ -59,9 +64,9 @@ const RoomChatBubble = ({ text, user_id, created_at }: Message) => {
   return (
     <List
       dense
-      sx={{ 
-        width: "100%", 
-        maxWidth: 360, 
+      sx={{
+        width: "100%",
+        maxWidth: 360,
       }}
     >
       <ListItemAvatar>
@@ -69,16 +74,28 @@ const RoomChatBubble = ({ text, user_id, created_at }: Message) => {
           <div>
             <Avatar>{getFirstNameLetter(user.name)}</Avatar>
           </div>
-          <div style={{        
-            background: '#DDD', 
-            margin: '.1rem .4rem', 
-            padding: '1rem',
-            width: '100%',
-            borderRadius: '.75rem'
-          }}
+          <div
+            style={{
+              background: "#DDD",
+              margin: ".1rem .4rem",
+              padding: "1rem",
+              width: "100%",
+              borderRadius: ".75rem",
+            }}
           >
-            <div id="text">{text}</div>
-            <div id="date" style={{fontSize: '.6rem', position: 'absolute', bottom: '.25rem', right: '1rem'}}>
+            {text && <div id="text">{text}</div>}
+            {file_content && (
+              <img src={file_content} alt="" className="bubble-image" />
+            )}
+            <div
+              id="date"
+              style={{
+                fontSize: ".6rem",
+                position: "absolute",
+                bottom: ".25rem",
+                right: "1rem",
+              }}
+            >
               {createFullDate(todaysDate) === createFullDate(convertMessageDate)
                 ? convertMessageDate.toLocaleTimeString([], {
                     hour: "numeric",

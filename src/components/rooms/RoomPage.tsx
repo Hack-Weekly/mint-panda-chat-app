@@ -47,6 +47,7 @@ const RoomPage = () => {
                   text={message.text}
                   user_id={message.user_id}
                   created_at={message.created_at}
+                  file_content={message.file_content}
                 />
               </div>
             );
