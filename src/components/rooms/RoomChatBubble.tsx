@@ -67,9 +67,6 @@ const RoomChatBubble = ({
       sx={{
         width: "100%",
         maxWidth: 360,
-      sx={{
-        width: "100%",
-        maxWidth: 360,
       }}
     >
       <ListItemAvatar>
@@ -77,14 +74,7 @@ const RoomChatBubble = ({
           <div>
             <Avatar>{getFirstNameLetter(user.name)}</Avatar>
           </div>
-          <div
-            style={{
-              background: "#DDD",
-              margin: ".1rem .4rem",
-              padding: "1rem",
-              width: "100%",
-              borderRadius: ".75rem",
-            }}
+
           <div
             style={{
               background: "#DDD",
