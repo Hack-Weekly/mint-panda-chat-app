@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useFilePicker } from "use-file-picker";
 import { Message } from "../../entities/message";
 import { sendMessage } from "../../api/messages";
@@ -12,7 +11,7 @@ interface PhotoSelectProps {
 
 const PhotoSelect: React.FC<PhotoSelectProps> = ({ roomId }) => {
   const [openFileSelector, { filesContent, clear }] = useFilePicker({
-    accept: "image/*",
+    accept: [".jpg", ".jpeg", ".png"],
     readAs: "DataURL",
   });
 
