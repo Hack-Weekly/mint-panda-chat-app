@@ -72,7 +72,9 @@ const RoomChatBubble = ({
       <ListItemAvatar>
         <ListItem disablePadding>
           <div>
-            <Avatar>{getFirstNameLetter(user.name)}</Avatar>
+            <Avatar src={user.profilePicture}>
+              {getFirstNameLetter(user.name)}
+            </Avatar>
           </div>
 
           <div
