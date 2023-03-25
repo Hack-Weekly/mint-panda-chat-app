@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
-import { Room } from '../../entities/room';
+import { Link } from "react-router-dom";
+import { Room } from "../../entities/room";
+import RoomInstance from "./RoomInstance";
 
 interface RoomListProps {
   rooms: Room[];
@@ -12,11 +13,15 @@ const RoomList: React.FC<RoomListProps> = ({ rooms }) => {
         ? rooms.map((room) => {
             return (
               <Link to={`/rooms/${room.id}`} key={room.id}>
-                <h2>{room.name}</h2>
+                <RoomInstance
+                  id={room.id}
+                  name={room.name}
+                  messages={room.messages}
+                />
               </Link>
             );
           })
-        : 'No rooms created yet!'}
+        : "No rooms created yet!"}
     </ul>
   );
 };
