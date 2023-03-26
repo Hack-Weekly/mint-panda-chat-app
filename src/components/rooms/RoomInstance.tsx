@@ -1,8 +1,9 @@
+import * as React from "react";
 import { useState, useEffect } from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
+// import List from "@mui/material/List";
+// import ListItem from "@mui/material/ListItem";
+// import ListItemAvatar from "@mui/material/ListItemAvatar";
+// import Avatar from "@mui/material/Avatar";
 import "./RoomChatBubble.css";
 import {
   collection,
@@ -10,8 +11,52 @@ import {
   getCountFromServer,
   getDocs,
 } from "@firebase/firestore";
+import {
+  Avatar,
+  CircularProgress,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Typography,
+  styled,
+  Chip,
+} from "@mui/material";
 import { db } from "../../api/firebase";
 import { Room } from "../../entities/room";
+
+const colors = [
+  "red",
+  "limegreen",
+  "green",
+  "blue",
+  "yellow",
+  "purple",
+  "orange",
+  "lightblue",
+  "lawngreen",
+  "darkslateblue",
+  "darkgreen",
+  "paleturquoise",
+  "salmon",
+];
+
+const StyledRoomAvatar = styled(Avatar)`
+  background-color: none;
+  color: transparent;
+`;
+const StyledChip = styled(Chip)`
+  background-color: #c70039;
+  border-radius: 50%;
+  color: white;
+  font-size: 0.75rem;
+  height: 28px;
+  width: 28px;
+
+  span {
+    padding: 4px;
+  }
+`;
 
 const RoomInstance = ({ id, name }: Room) => {
   const [roomMessagesCount, setRoomMessagesCount] = useState(0);
@@ -50,12 +95,40 @@ const RoomInstance = ({ id, name }: Room) => {
     >
       <ListItemAvatar>
         <ListItem disablePadding>
-          <div>
-            <Avatar></Avatar>
-          </div>
-          <div id="room-name">{name}</div>
-          <div id="member-count">{memberCount} online members</div>
-          <div id="message-count">{roomMessagesCount}</div>
+          <ListItem alignItems="center">
+            <ListItemAvatar>
+              <StyledRoomAvatar
+                alt={`icon for ${name}`}
+                src=""
+                sx={{
+                  backgroundImage: `linear-gradient(${
+                    colors[Math.floor(Math.random() * colors.length)]
+                  }, ${
+                    colors[Math.floor(Math.random() * colors.length)]
+                  },  lightgray)`,
+                }}
+              />
+            </ListItemAvatar>
+            <ListItemText
+              primary={name}
+              sx={{ maxWidth: "50%" }}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    sx={{ display: "inline", fontWeight: "200" }}
+                    component="span"
+                    variant="body2"
+                    color="text.primary"
+                  >
+                    {memberCount === 1
+                      ? memberCount + " online member"
+                      : memberCount + " online members"}
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+            {roomMessagesCount > 0 && <StyledChip label={roomMessagesCount} />}
+          </ListItem>
         </ListItem>
       </ListItemAvatar>
     </List>
