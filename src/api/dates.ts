@@ -1,6 +1,7 @@
 // convert created_at to new Date for converting to a time as a string
-export const convertMessageDate = (created_at: {seconds: number; nanoseconds: number}): string => {
-    let rawDate = new Date(created_at.seconds * 1000 + created_at.nanoseconds / 1000000);
+export type firestoreDate = {seconds: number; nanoseconds: number};
+export const convertMessageDate = (messageDate: firestoreDate): string => {
+    let rawDate = new Date(messageDate.seconds * 1000 + messageDate.nanoseconds / 1000000);
     if (createFullDate(new Date()) === createFullDate(rawDate)) {
         return rawDate.toLocaleTimeString([], {
             hour: "numeric",

@@ -8,6 +8,7 @@ import BottomNavBar from "./components/BottomNavBar";
 import Profile from "./components/Profile";
 
 import { logout } from "./api/firebase";
+import Conversation from "./components/conversations/Conversation";
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/messages" element={<Messages />} />
+        <Route path="messages/:id" element={<Conversation />} />
         <Route path="/rooms" element={<RoomsPage />} />
         <Route path="rooms/:id" element={<RoomPage />} />
         <Route path="/profile" element={<Profile logout={logout} />} />

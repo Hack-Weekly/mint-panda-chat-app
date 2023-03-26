@@ -1,7 +1,7 @@
 import { createCollection } from "./firebase";
-import { collection, where } from "firebase/firestore";
+import { collection, where, or } from "firebase/firestore";
 import { db } from "./firebase";
-import { onSnapshot, query, addDoc, orderBy, getDocs } from "@firebase/firestore";
+import { onSnapshot, query, addDoc, orderBy, getDocs, QuerySnapshot, DocumentData } from "@firebase/firestore";
 import { Message } from "../entities/message";
 
 const sendMessage = async (roomId: string, message: Message) => {
@@ -13,22 +13,40 @@ const sendMessage = async (roomId: string, message: Message) => {
   }
 };
 
-// Firebase doesn't seem to support OR queries so two query results are concatenated
-const getIndividualMessages = async (userId: string) => {
-    const fromQueries = query(
-        collection(db, "conversations"), 
-            where('user_to_id', '==', userId),
+const getConversationPreviews = async (userId: string, callback: (a: any) => void) => {
+    const q = query(
+        collection(db, "conversations"),
+            or(
+                where('user_from_id', '==', userId),
+                where('user_to_id', '==', userId)
+            ),
             orderBy('created_at', 'desc')
     );
-    const toQueries = query(
-        collection(db, "conversations"), 
-            where('user_from_id', '==', userId),
-            orderBy('created_at', 'desc')
-    );
+    try {
+        return onSnapshot(q, (snapshot) => {
+            callback(snapshot.docs.map((doc) => (
+                doc.data()
+            )));
+        });
+    } catch (e) {}
+}
 
-    const fromDocs = await getDocs(fromQueries);
-    const toDocs = await getDocs(toQueries);
-    return fromDocs.docs.concat(toDocs.docs);
+const getConversationMessages = async (contactId: string, callback: (a: any) => void) => {
+    const q = query(
+        collection(db, "conversations"), 
+            or(
+                where('user_to_id', '==', contactId),
+                where('user_from_id', '==', contactId),
+            ),
+          orderBy('created_at')
+    );
+    try {
+        return onSnapshot(q, (snapshot) => {
+            callback(snapshot.docs.map((doc) => (
+                doc.data()
+            )));
+        });
+    } catch (e) {}
 }
 
 const getMessages = (
@@ -50,4 +68,4 @@ const getMessages = (
   } catch (error) {}
 };
 
-export { sendMessage, getIndividualMessages, getMessages };
+export { sendMessage, getConversationPreviews, getConversationMessages, getMessages };
