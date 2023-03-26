@@ -3,17 +3,17 @@ import { useLocation } from "react-router-dom";
 
 import { DocumentData, addDoc, setDoc, collection, Timestamp } from 'firebase/firestore';
 
-import { auth, createCollection, db } from "../../api/firebase";
+import { auth, db } from "../../api/firebase";
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { getConversationMessages } from '../../api/messages';
-import ConversationBubbleIn from "./ConversationBubbleIn";
-import ConversationBubbleOut from "./ConversationBubbleOut";
+import ConversationBubbleIn from "./Bubbles/ConversationBubbleIn";
+import ConversationBubbleOut from "./Bubbles/ConversationBubbleOut";
 
 import './Conversation.css';
 
 export default function Conversation() {
-    const [parsedConversation, setParsedConversation] = useState<DocumentData[]>([]);
+    const [conversation, setConversation] = useState<DocumentData[]>([]);
     const [user] = useAuthState(auth);
     const location = useLocation();
     const { contact } = location.state;
@@ -22,24 +22,9 @@ export default function Conversation() {
         if (!user) {
             return;
         }
-        let conversations = await getConversationMessages(user.uid);
-
-        // filter out docs where contact received it but user did not send
-        let filteredTo = conversations.to.docs.filter((doc) => {
-            return doc.data().user_from_id != user.uid;
-        });
-
-        // filter out docs where contact sent it but user did not receive
-        let filteredFrom = conversations.from.docs.filter((doc) => {
-            return doc.data().user_to_id != user.uid;
-        });
-        const sortedMessages = filteredTo.concat(filteredFrom).sort((a, b) => 
-            a.data().created_at - b.data().created_at
-        );
-        const parsedMessages = sortedMessages.map((messageDoc) => {
-            return messageDoc.data();
-        })
-        setParsedConversation(parsedMessages);
+        getConversationMessages(contact.uid, (messages: any) => {
+            setConversation(messages);
+          });
     }
 
     const navigateToMessages = () => {
@@ -47,7 +32,7 @@ export default function Conversation() {
     }
 
     const inflateConversation = () => {
-        const conversationElem = parsedConversation.map((message) => {
+        const conversationElem = conversation.map((message) => {
             return (message.user_from_id == contact.uid) 
                ? ConversationBubbleIn(message.message, message.created_at)
                : ConversationBubbleOut(message.message, message.created_at)

@@ -1,4 +1,4 @@
-import { convertMessageDate, firestoreDate } from '../../api/dates';
+import { convertMessageDate, firestoreDate } from '../../../api/dates';
 import './ConversationBubbles.css';
 
 export default function ConversationBubbleOut(message: string, messageDate: firestoreDate) {
