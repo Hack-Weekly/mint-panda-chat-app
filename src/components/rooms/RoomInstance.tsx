@@ -127,7 +127,7 @@ const RoomInstance = ({ id, name }: Room) => {
                 </React.Fragment>
               }
             />
-            <StyledChip label={roomMessagesCount} />
+            {roomMessagesCount > 0 && <StyledChip label={roomMessagesCount} />}
           </ListItem>
         </ListItem>
       </ListItemAvatar>

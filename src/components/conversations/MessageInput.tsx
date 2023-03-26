@@ -36,6 +36,9 @@ const MessageInput: React.FC<MessageInputProps> = ({ roomId }) => {
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
+    if (messageText.replace(/ /g, '') === "") return;
+
     const messageToSend: Message = {
       created_at: new Date(),
       text: messageText,

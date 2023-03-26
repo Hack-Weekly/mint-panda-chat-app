@@ -4,10 +4,22 @@ import { sendMessage } from "../../api/messages";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../api/firebase";
 import classes from "./PhotoSelect.module.css";
+import { FaPlusSquare } from "react-icons/fa";
 
 interface PhotoSelectProps {
   roomId: string;
 }
+
+const buttonStyle = {
+  border: "none",
+  background: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: "1.75rem",
+  color: "#33ACFF",
+  flexGrow: 1,
+};
 
 const PhotoSelect: React.FC<PhotoSelectProps> = ({ roomId }) => {
   const [openFileSelector, { filesContent, clear }] = useFilePicker({
@@ -39,8 +51,8 @@ const PhotoSelect: React.FC<PhotoSelectProps> = ({ roomId }) => {
     <div>
       <form onSubmit={handleSubmit}>
         {filesContent.length === 0 && (
-          <button onClick={openFileSelector} type="button">
-            +
+          <button style={buttonStyle} onClick={openFileSelector} type="button">
+            < FaPlusSquare />
           </button>
         )}
         {filesContent.map((file) => {
