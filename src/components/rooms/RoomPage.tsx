@@ -6,6 +6,7 @@ import { getRoomById } from "../../api/rooms";
 import { getMessages } from "../../api/messages";
 import MessageInput from "../conversations/MessageInput";
 import { Message } from "../../entities/message";
+import classes from "./RoomPage.module.css";
 
 import RoomChatBubble from "./RoomChatBubble";
 
@@ -35,10 +36,9 @@ const RoomPage = () => {
     getAllMessages();
   }, []);
 
-
   if (room && room.name && messages && id) {
     return (
-      <div>
+      <div className={classes.roomsPage}>
         <h2>{room.name}</h2>
         <div>
           {messages.map((message: Message) => {
@@ -54,7 +54,9 @@ const RoomPage = () => {
             );
           })}
         </div>
-        <MessageInput roomId={id} />
+        <div className={classes.fixed}>
+          <MessageInput roomId={id} />
+        </div>
       </div>
     );
   } else {
