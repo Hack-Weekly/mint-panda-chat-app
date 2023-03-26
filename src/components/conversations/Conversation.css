@@ -1,0 +1,65 @@
+.conversation-page {
+    height: 90vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.conversation-header {
+    height: 10%;
+    display: flex;
+    align-items: center;
+    padding: 0 1%;
+    background: linear-gradient(to right, rgba(217, 217, 217, 0.4), rgba(217, 217, 217, 0.6));
+}
+
+.conversation-back-button {
+    all: unset;
+    width: 35px;
+    height: 35px;
+    background-image: url('images/back.png');
+    background-size: 35px;
+}
+.conversation-back-button:hover {cursor: pointer;}
+
+.conversation-header-round {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    margin-right: 15px;
+    background-color: burlywood;
+}
+
+.conversation-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    padding: 5% 5%;
+}
+
+.conversation-message-box {
+    width: 80%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 0 10px;
+    margin: 0 auto;
+}
+
+#conversation-message-input {
+    border: none;
+    padding: 0px 0px;
+    width: 100%;
+    height: 55px;
+    text-indent: 5px;
+    font-family: 'Jost';
+    font-size: 1.2rem;
+    color:rgba(0, 0, 0, 0.75)
+}
+#conversation-message-input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+#conversation-message-input:focus {
+    outline: none;
+}

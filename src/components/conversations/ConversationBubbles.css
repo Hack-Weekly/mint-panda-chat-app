@@ -1,0 +1,23 @@
+.conversation-bubble {
+    height: 35px;
+    width: fit-content;
+    min-width: 50px;
+    padding: 8px 10px;
+    margin: 10px 0px;
+    border-radius: 14px;
+    background-color: rgba(111, 132, 244);
+    align-self: flex-end;
+    color: rgba(242, 239, 239, 0.95);
+}
+
+.bubble-in {
+    background-color: rgba(122, 122, 122, 0.37);
+    align-self: flex-start;
+    color: black;
+}
+
+.conversation-bubble-date {
+    font-size: 0.65rem;
+    margin: 0 auto; 
+    text-align: right;
+}
