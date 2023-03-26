@@ -3,6 +3,7 @@ import { collection, where, or } from "firebase/firestore";
 import { db } from "./firebase";
 import { onSnapshot, query, addDoc, orderBy, getDocs, QuerySnapshot, DocumentData } from "@firebase/firestore";
 import { Message } from "../entities/message";
+import { Conversation } from "../entities/conversation";
 
 const sendMessage = async (roomId: string, message: Message) => {
   const messagesCol = createCollection<Message>("rooms", roomId, "messages");
@@ -31,14 +32,14 @@ const getConversationPreviews = async (userId: string, callback: (a: any) => voi
     } catch (e) {}
 }
 
-const getConversationMessages = async (contactId: string, callback: (a: any) => void) => {
+const getConversationMessages = async (contactId: string, callback: (m: DocumentData[]) => void) => {
     const q = query(
         collection(db, "conversations"), 
             or(
                 where('user_to_id', '==', contactId),
                 where('user_from_id', '==', contactId),
             ),
-          orderBy('created_at')
+          orderBy('created_at', 'desc')
     );
     try {
         return onSnapshot(q, (snapshot) => {

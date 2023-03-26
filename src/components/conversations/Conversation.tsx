@@ -22,7 +22,7 @@ export default function Conversation() {
         if (!user) {
             return;
         }
-        getConversationMessages(contact.uid, (messages: any) => {
+        getConversationMessages(contact.uid, (messages: DocumentData[]) => {
             setConversation(messages);
           });
     }
