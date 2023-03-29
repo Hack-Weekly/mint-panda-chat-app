@@ -10,18 +10,19 @@ import './ConversationsPage.css'
 import { Link } from 'react-router-dom';
 import { Conversation } from '../../entities/conversation';
 
-export default function Messages() {
+export interface UserData {
+    uid: string;
+    name: string;
+    photoURL: string;
+}
 
-    interface UserData {
-        uid: string;
-        name: string;
-        photoURL: string;
-    }
+export default function Messages() {
 
     const [user] = useAuthState(auth);
     const [conversations, setConversations] = useState<Conversation[]>([]);
     const [users, setUsers] = useState({} as { [key: string]: UserData});
-    const [previews, setPreviews] = useState<Conversation[]>([]) ;
+    const [previews, setPreviews] = useState<Conversation[]>([]);
+    const [selecting, setSelecting] = useState(false);
 
     async function fetchConversations() {
         if (!user) {
@@ -97,10 +98,35 @@ export default function Messages() {
         return previewsElem;
     }
 
+    const inflateUsers = () => {
+        let usersElem = [] as JSX.Element[];
+        for (let user in users) {
+            usersElem.push(
+                <Link to={`/messages/${users[user].uid}`} key={Math.random()} state={{contact: users[user]}}>
+                    <div className='users-preview-user' key={users[user].uid}>
+                        {users[user].photoURL != undefined
+                            ? <img src={users[user].photoURL}/>
+                            : <span className='user-preview-image-round'></span>
+                        }
+                        <p>{users[user].name}</p>
+                    </div>
+                </Link>
+            )
+        }
+        return usersElem;
+    }
+
     useEffect(() => {
         fetchUsers();
         fetchConversations();
     }, [user]);
+
+    useEffect(() => {
+        let pencil = document.getElementById('new-message-icon') as HTMLButtonElement;
+        selecting
+            ? pencil.style.backgroundImage = 'url("./images/back.png")'
+            : pencil.style.backgroundImage = 'url("./images/pencil.png")'
+    }, [selecting])
 
     useEffect(() => {
         parseConversationPreviews();
@@ -110,15 +136,14 @@ export default function Messages() {
         <div id="messages-page">
             <div id='messages-page-header'>
                 <h1>Messages</h1>
-                <img id='new-message-icon' className='messages-icon' src='/images/pencil.png'></img>
+                <button id='new-message-icon' onClick={(e) => setSelecting(!selecting)}></button>
             </div>
             <div id="messages-search">
                 <img className='messages-icon' src='/images/search.png'></img>
                 <input id='search-input' placeholder='Search'></input>
             </div>
-            {/* Online users list */}
-            <div id='messages-content'>
-                {inflatePreviews()}
+            <div id='messages-page-content'>
+                {selecting ? inflateUsers() : inflatePreviews()}
             </div>
         </div>
     )
