@@ -1,11 +1,12 @@
 import { DocumentData } from "@firebase/firestore";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
 
 import { getRoomById } from "../../api/rooms";
 import { getMessages } from "../../api/messages";
 import MessageInput from "../conversations/MessageInput";
 import { Message } from "../../entities/message";
+import classes from "./RoomPage.module.css";
 
 import RoomChatBubble from "./RoomChatBubble";
 
@@ -13,6 +14,7 @@ const RoomPage = () => {
   const [room, setRoom] = useState<DocumentData | undefined>({});
   const [messages, setMessages] = useState<Message[]>();
   const { id } = useParams();
+  const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const getRoom = async () => {
@@ -35,12 +37,15 @@ const RoomPage = () => {
     getAllMessages();
   }, []);
 
+  useEffect(() => {
+    container.current?.scrollIntoView({ block: 'end',  behavior: 'smooth' });
+  }, [messages])
 
   if (room && room.name && messages && id) {
     return (
-      <div>
+      <div className={classes.roomsPage}>
         <h2>{room.name}</h2>
-        <div>
+        <div ref={container}>
           {messages.map((message: Message) => {
             return (
               <div key={message.id}>
@@ -54,7 +59,9 @@ const RoomPage = () => {
             );
           })}
         </div>
-        <MessageInput roomId={id} />
+        <div className={classes.fixed}>
+          <MessageInput roomId={id} />
+        </div>
       </div>
     );
   } else {

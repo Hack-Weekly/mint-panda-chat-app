@@ -1,0 +1,13 @@
+.roomsPage {
+  height: 87vh;
+  overflow: scroll;
+  padding: 0 10px;
+}
+
+.fixed {
+  position: fixed;
+  /* top: 0; */
+  bottom: 4.25em;
+  left: 0;
+  right: 0;
+}
